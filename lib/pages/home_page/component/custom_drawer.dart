@@ -11,103 +11,105 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Stack(
-              children: [
-                Container(
-                  color: kPrimaryLightColor,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: CircleAvatar(
-                      radius: getPropertionateScreenWidht(60),
-                      backgroundColor: kPrimaryColor,
-                      backgroundImage: NetworkImage(
-                          'https://lh3.googleusercontent.com/a-/AFdZucovlo2puumagCeN9t8yLO5YVfa9mS_iBb16GMyfuw=s288-p-rw-no'),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              padding: EdgeInsets.all(defaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: Container(
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Stack(
                 children: [
-                  Text(
-                    'Data Diri',
-                    style: primaryTextStyle.copyWith(
-                        fontSize: 24, fontWeight: semiBold),
+                  Container(
+                    color: kPrimaryLightColor,
                   ),
-                  SizedBox(
-                    height: getPropertionateScreenHeight(20),
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.person),
-                      SizedBox(
-                        width: getPropertionateScreenWidht(40),
-                      ),
-                      Text(
-                        'Feri Adrian',
-                        style: primaryTextStyle.copyWith(
-                            fontSize: 16, fontWeight: medium),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: getPropertionateScreenHeight(10),
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.book),
-                      SizedBox(
-                        width: getPropertionateScreenWidht(40),
-                      ),
-                      Text(
-                        '1924038',
-                        style: primaryTextStyle.copyWith(
-                            fontSize: 16, fontWeight: medium),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: getPropertionateScreenHeight(300),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      height: getPropertionateScreenHeight(58),
-                      decoration: BoxDecoration(
-                        color: kPrimaryLightColor,
-                        borderRadius: BorderRadius.circular(
-                          getPropertionateScreenWidht(12),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Keluar',
-                          style: GoogleFonts.redHatDisplay(
-                              fontWeight: semiBold,
-                              fontSize: 16,
-                              color: Colors.white),
-                        ),
+                  Padding(
+                    padding: EdgeInsets.all(defaultPadding),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: CircleAvatar(
+                        radius: getPropertionateScreenWidht(60),
+                        backgroundColor: kPrimaryColor,
+                        backgroundImage: NetworkImage(
+                            'https://lh3.googleusercontent.com/a-/AFdZucovlo2puumagCeN9t8yLO5YVfa9mS_iBb16GMyfuw=s288-p-rw-no'),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 2,
+              child: Container(
+                padding: EdgeInsets.all(defaultPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Data Diri',
+                      style: primaryTextStyle.copyWith(
+                          fontSize: 24, fontWeight: semiBold),
+                    ),
+                    SizedBox(
+                      height: getPropertionateScreenHeight(20),
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.person),
+                        SizedBox(
+                          width: getPropertionateScreenWidht(40),
+                        ),
+                        Text(
+                          'Feri Adrian',
+                          style: primaryTextStyle.copyWith(
+                              fontSize: 16, fontWeight: medium),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: getPropertionateScreenHeight(10),
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.book),
+                        SizedBox(
+                          width: getPropertionateScreenWidht(40),
+                        ),
+                        Text(
+                          '1924038',
+                          style: primaryTextStyle.copyWith(
+                              fontSize: 16, fontWeight: medium),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: getPropertionateScreenHeight(300),
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        height: getPropertionateScreenHeight(58),
+                        decoration: BoxDecoration(
+                          color: kPrimaryLightColor,
+                          borderRadius: BorderRadius.circular(
+                            getPropertionateScreenWidht(12),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Keluar',
+                            style: GoogleFonts.redHatDisplay(
+                                fontWeight: semiBold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

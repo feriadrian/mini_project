@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mini_projeck/config/config.dart';
 import 'package:mini_projeck/constant/constant.dart';
-import 'package:mini_projeck/pages/admin_page/admin_page.dart';
-import 'package:mini_projeck/pages/admin_page/components/regis_field.dart';
 import 'package:mini_projeck/pages/home_page/home_page.dart';
 import 'package:mini_projeck/pages/login_page/components/input_field.dart';
 import 'package:mini_projeck/pages/login_page/components/login_button.dart';
 import 'package:mini_projeck/pages/login_page/components/masuk_sebagai_admin.dart';
-import 'package:mini_projeck/pages/materi_page/materi_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
+
+  Duration get loginTime => Duration(milliseconds: 2250);
 
   final _formkey = GlobalKey<FormState>();
   final _nisnC = TextEditingController();

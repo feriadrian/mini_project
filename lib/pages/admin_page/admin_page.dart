@@ -3,15 +3,20 @@ import 'package:mini_projeck/config/config.dart';
 import 'package:mini_projeck/constant/constant.dart';
 import 'package:mini_projeck/pages/admin_page/components/regis_button.dart';
 import 'package:mini_projeck/pages/admin_page/components/regis_field.dart';
+import 'package:mini_projeck/provider/auth_provider.dart';
+import 'package:mini_projeck/provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class AdminPage extends StatelessWidget {
   AdminPage({super.key});
-  final _formkey = GlobalKey<FormState>();
-  final _nisnC = TextEditingController();
-  final _passC = TextEditingController();
-  final _namaC = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final _formkey = GlobalKey<FormState>();
+    final _nisnC = TextEditingController();
+    final _passC = TextEditingController();
+    final _namaC = TextEditingController();
+
     SizeConfig().init(context);
     return Scaffold(
       body: Padding(
@@ -43,7 +48,19 @@ class AdminPage extends StatelessWidget {
                         keyboardType: TextInputType.multiline,
                         controller: _passC),
                     Spacer(),
-                    RegisButton(),
+                    RegisButton(
+                      press: () async {
+                        if (await AuthProvider.signUp(
+                          nama: _namaC.text,
+                          nisn: _nisnC.text,
+                          password: _passC.text,
+                        )) {
+                          print('Success');
+                        } else {
+                          print('Failed');
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),
