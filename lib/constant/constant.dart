@@ -58,3 +58,5 @@ List<BoxShadow> softShadow = [
 ];
 
 const String passAdmin = 'admin@admin';
+
+const String defaultPassUSer = 'Pass@123';

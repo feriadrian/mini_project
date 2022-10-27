@@ -4,7 +4,7 @@ import 'package:mini_projeck/pages/home_page/component/list_cover_gridview.dart'
 import 'package:mini_projeck/pages/home_page/home_page.dart';
 import 'package:mini_projeck/pages/login_page/login_page.dart';
 import 'package:mini_projeck/pages/spalsh_page/splash_page.dart';
-import 'package:mini_projeck/provider/auth_provider.dart';
+import 'package:mini_projeck/services/auth_services.dart';
 import 'package:mini_projeck/provider/provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,9 +29,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => AuthProvider(),
-        ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
         ),

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:mini_projeck/pages/home_page/component/user_model.dart';
 import 'package:mini_projeck/provider/provider.dart';
 
-class AuthProvider extends ChangeNotifier {
+class AuthSerices extends ChangeNotifier {
   static FirebaseAuth _auth = FirebaseAuth.instance;
 
   void singIn(String nisn, String password) async {
@@ -48,4 +48,16 @@ class AuthProvider extends ChangeNotifier {
       return false;
     }
   }
+
+  // static Future<bool> signIn(String email, String password) async {
+  //   try {
+  //     UserCredential authCredential = await _auth.signInWithEmailAndPassword(
+  //         email: email, password: password);
+
+  //     UserModel? users = await authCredential.user!.fromFireStore();
+  //     return true;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
 }
