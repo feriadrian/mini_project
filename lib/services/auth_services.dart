@@ -2,62 +2,55 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:mini_projeck/pages/home_page/component/user_model.dart';
 import 'package:mini_projeck/provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class AuthSerices extends ChangeNotifier {
   static FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void singIn(String nisn, String password) async {
-    Uri url = Uri.parse(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyBLoyyGLhfyw2K-kNdIcVluwjDy5mXvIVE');
-    var response = await http.post(
-      url,
-      body: json.encode({
-        'nisn': nisn,
-        'password': password,
-        'returnSecureToken': true,
-      }),
-    );
-    print(json.decode(response.body));
-  }
+  String _error = '';
+  String get error => _error;
 
-  static Future<bool> signUp(
-      {required String nama,
-      required String nisn,
-      required String password}) async {
+  Stream<User?> get streamAuthStatus => _auth.authStateChanges();
+
+  Future<bool> regis({
+    required String email,
+    required String password,
+  }) async {
     try {
-      String email = nisn + '@example.com';
-
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
+      await UserProvider().singUp(email, password);
+      _error = '';
 
-      // ...
-
-      await UserProvider().addUser(nama, nisn);
-
-      // ...
-
+      notifyListeners();
       return true;
-
-      // ...
-
-    } catch (e) {
-      print(e);
+    } on FirebaseAuthException catch (e) {
+      _error = e.message.toString();
+      notifyListeners();
       return false;
     }
   }
 
-  // static Future<bool> signIn(String email, String password) async {
-  //   try {
-  //     UserCredential authCredential = await _auth.signInWithEmailAndPassword(
-  //         email: email, password: password);
+  Future<bool> login({required String email, required String password}) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      await UserProvider().singIn(email, password);
+      _error = '';
 
-  //     UserModel? users = await authCredential.user!.fromFireStore();
-  //     return true;
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // }
+      notifyListeners();
+      return true;
+    } on FirebaseAuthException catch (e) {
+      _error = e.message.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  void logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
 }

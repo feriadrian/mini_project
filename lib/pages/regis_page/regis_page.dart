@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mini_projeck/config/config.dart';
 import 'package:mini_projeck/constant/constant.dart';
-import 'package:mini_projeck/pages/admin_page/components/regis_button.dart';
+import 'package:mini_projeck/initial_user/initial_user.dart';
 import 'package:mini_projeck/pages/login_page/components/input_field.dart';
+import 'package:mini_projeck/pages/regis_page/components/regis_button.dart';
 import 'package:mini_projeck/services/auth_services.dart';
-import 'package:mini_projeck/provider/provider.dart';
 import 'package:provider/provider.dart';
 
-class AdminPage extends StatelessWidget {
-  AdminPage({super.key});
+class RegisPage extends StatefulWidget {
+  RegisPage({super.key});
+
+  @override
+  State<RegisPage> createState() => _RegisPageState();
+}
+
+class _RegisPageState extends State<RegisPage> {
   final _formkey = GlobalKey<FormState>();
-  final _nisnC = TextEditingController();
-  final _namaC = TextEditingController();
+
+  final _emailC = TextEditingController();
+
+  final _passC = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailC.dispose();
+    _passC.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-
+    final authServices = Provider.of<AuthSerices>(context);
     SizeConfig().init(context);
     return Scaffold(
       body: Form(
@@ -32,56 +48,48 @@ class AdminPage extends StatelessWidget {
                     children: [
                       InputField(
                           validator: () {
-                            if (_namaC.text.isEmpty) {
-                              return 'Mohom Masukkan Nama.';
+                            if (_emailC.text.isEmpty) {
+                              return 'Mohom Masukkan Email.';
                             } else {
                               return null;
                             }
                           },
-                          hintText: 'Nama',
+                          hintText: 'Email',
                           keyboardType: TextInputType.name,
-                          controller: _namaC),
+                          controller: _emailC),
                       SizedBox(
                         height: getPropertionateScreenHeight(24),
                       ),
                       InputField(
                           validator: () {
-                            if (_nisnC.text.isEmpty) {
-                              return 'Mohom Masukkan NISN.';
+                            if (_passC.text.isEmpty) {
+                              return 'Mohom Masukkan Password.';
                             } else {
                               return null;
                             }
                           },
-                          hintText: 'NISN',
+                          hintText: 'Password',
                           keyboardType: TextInputType.number,
-                          controller: _nisnC),
+                          controller: _passC),
                       SizedBox(
                         height: getPropertionateScreenHeight(24),
                       ),
                       Spacer(),
                       RegisButton(
                         press: () async {
-                          if (_formkey.currentState!.validate()) {
-                            if (await AuthSerices.signUp(
-                              nama: _namaC.text,
-                              nisn: _nisnC.text,
-                              password: defaultPassUSer,
-                            )) {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  content:
-                                      Text('Berhasil Melakukan Registrasi'),
+                          if (await authServices.regis(
+                              email: _emailC.text, password: _passC.text)) {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (context) => InitialUser(),
                                 ),
-                              );
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  content: Text('NISN Telah Terdaftar'),
-                                ),
-                              );
-                            }
+                                (route) => false);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(authServices.error.toString())),
+                            );
                           }
                         },
                       ),

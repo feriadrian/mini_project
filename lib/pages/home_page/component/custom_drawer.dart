@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_projeck/config/config.dart';
 import 'package:mini_projeck/constant/constant.dart';
+import 'package:mini_projeck/initial_user/initial_user.dart';
+import 'package:mini_projeck/provider/provider.dart';
+import 'package:mini_projeck/services/auth_services.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -81,10 +85,13 @@ class CustomDrawer extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: getPropertionateScreenHeight(300),
+                      height: getPropertionateScreenHeight(10),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Provider.of<AuthSerices>(context, listen: false)
+                            .logout();
+                      },
                       child: Container(
                         height: getPropertionateScreenHeight(58),
                         decoration: BoxDecoration(

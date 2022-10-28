@@ -5,17 +5,19 @@ import 'package:mini_projeck/pages/home_page/home_page.dart';
 import 'package:mini_projeck/pages/login_page/components/input_field.dart';
 import 'package:mini_projeck/pages/login_page/components/login_button.dart';
 import 'package:mini_projeck/pages/login_page/components/masuk_sebagai_admin.dart';
+import 'package:mini_projeck/services/auth_services.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-  Duration get loginTime => Duration(milliseconds: 2250);
-
   final _formkey = GlobalKey<FormState>();
-  final _nisnC = TextEditingController();
+  final _emailC = TextEditingController();
   final _passC = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final authServices = Provider.of<AuthSerices>(context);
+
     SizeConfig().init(context);
     return Scaffold(
       body: Form(
@@ -60,15 +62,15 @@ class LoginPage extends StatelessWidget {
                       ),
                       InputField(
                         validator: () {
-                          if (_nisnC.text == null || _nisnC.text.isEmpty) {
-                            return 'Please Enter Your NISN.';
+                          if (_emailC.text == null || _emailC.text.isEmpty) {
+                            return 'Please Enter Your Email.';
                           } else {
                             return null;
                           }
                         },
-                        controller: _nisnC,
-                        hintText: 'NISN',
-                        keyboardType: TextInputType.number,
+                        controller: _emailC,
+                        hintText: 'Email',
+                        keyboardType: TextInputType.emailAddress,
                       ),
                       SizedBox(
                         height: getPropertionateScreenHeight(18),
@@ -89,20 +91,25 @@ class LoginPage extends StatelessWidget {
                         height: getPropertionateScreenHeight(35),
                       ),
                       LoginButton(
-                        press: () {
-                          if (_formkey.currentState!.validate()) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
-                              ),
+                        press: () async {
+                          if (await authServices.login(
+                              email: _emailC.text, password: _passC.text)) {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                                (route) => false);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(authServices.error.toString())),
                             );
                           }
-                          ;
                         },
                       ),
                       Spacer(),
-                      MasukSebagaiAdmin(),
+                      BelumPunyaAkun(),
                       SizedBox(
                         height: getPropertionateScreenHeight(24),
                       )

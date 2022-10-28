@@ -33,6 +33,7 @@ dependencies:
   delayed_display: ^2.0.0
   firebase_auth: ^4.0.2
   firebase_core: ^2.1.0
+  fluttertoast: ^8.1.1
   flutter:
     sdk: flutter
   flutter_svg: ^1.1.5
