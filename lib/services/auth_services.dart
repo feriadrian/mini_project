@@ -22,8 +22,13 @@ class AuthSerices extends ChangeNotifier {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
+      final User user = _auth.currentUser!;
+      final localId = user.uid;
+      final String role = 'siswa';
       await UserProvider().singUp(email, password);
       _error = '';
+
+      UserProvider().addPlayer(localId, email, role);
 
       notifyListeners();
       return true;

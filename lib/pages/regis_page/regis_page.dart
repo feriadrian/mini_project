@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mini_projeck/config/config.dart';
 import 'package:mini_projeck/constant/constant.dart';
-import 'package:mini_projeck/initial_user/initial_user.dart';
+import 'package:mini_projeck/pages/home_page/data_diri/data_diri.dart';
+import 'package:mini_projeck/pages/home_page/home_page.dart';
 import 'package:mini_projeck/pages/login_page/components/input_field.dart';
 import 'package:mini_projeck/pages/regis_page/components/regis_button.dart';
 import 'package:mini_projeck/services/auth_services.dart';
@@ -81,7 +82,7 @@ class _RegisPageState extends State<RegisPage> {
                               email: _emailC.text, password: _passC.text)) {
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                  builder: (context) => InitialUser(),
+                                  builder: (context) => HomePage(),
                                 ),
                                 (route) => false);
                           } else {

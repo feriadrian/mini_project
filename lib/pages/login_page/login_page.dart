@@ -8,12 +8,27 @@ import 'package:mini_projeck/pages/login_page/components/masuk_sebagai_admin.dar
 import 'package:mini_projeck/services/auth_services.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final _formkey = GlobalKey<FormState>();
+
   final _emailC = TextEditingController();
+
   final _passC = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailC.dispose();
+    _passC.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthSerices>(context);
@@ -94,11 +109,11 @@ class LoginPage extends StatelessWidget {
                         press: () async {
                           if (await authServices.login(
                               email: _emailC.text, password: _passC.text)) {
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                  builder: (context) => HomePage(),
-                                ),
-                                (route) => false);
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => HomePage(),
+                              ),
+                            );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

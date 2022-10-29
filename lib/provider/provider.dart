@@ -8,22 +8,26 @@ import 'package:mini_projeck/models/users_models.dart';
 import 'package:mini_projeck/services/services.dart';
 
 class UserProvider extends ChangeNotifier {
-  late String _idToken;
-  late String _userId;
-  late DateTime _expiryDate;
+  List<UserModels> _userModels = [];
+  List<UserModels> get userModels => _userModels;
 
-  bool get isAuth {
-    return token != null;
-  }
-
-  String? get token {
-    if (_idToken != null &&
-        _expiryDate.isAfter(DateTime.now()) &&
-        _expiryDate != null) {
-      return _idToken;
-    } else {
-      return null;
-    }
+  void addPlayer(String id, String email, String role) {
+    DateTime dateTimeNow = DateTime.now();
+    Uri url = Uri.parse(
+        'https://mini-project-26683-default-rtdb.firebaseio.com/users.json');
+    http.post(
+      url,
+      body: json.encode(
+        {
+          'id': id,
+          'email': email,
+          'role': role,
+        },
+      ),
+    );
+    _userModels.add(
+      UserModels(id: id, email: email, role: role, createAt: DateTime.now()),
+    );
   }
 
   Future<void> singUp(String email, String password) async {
